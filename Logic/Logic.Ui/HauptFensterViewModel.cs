@@ -22,21 +22,21 @@ namespace Videothek.Logic.Ui.ViewModel
             }
         }
 
-        private ICommand _OnTableSelect;
+        private ICommand _onTableSelect;
 
         public ICommand OnTableSelect
         {
             get
             {
-                if (_OnTableSelect == null)
+                if (_onTableSelect == null)
                 {
-                    _OnTableSelect = new RelayCommand<string>((table) =>
+                    _onTableSelect = new RelayCommand<string>((table) =>
                     {
                         SelectedData = GetDataViewOf(table);
                     });
                 }
 
-                return _OnTableSelect;
+                return _onTableSelect;
             }
         }
 
