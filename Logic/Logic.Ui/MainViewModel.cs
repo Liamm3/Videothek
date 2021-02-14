@@ -29,8 +29,8 @@ namespace Videothek.Logic.Ui.ViewModel
                 {
                     _onStartKlick = new RelayCommand(() =>
                     {
-                        var message = new PropertyChangedMessage<bool>(false, true, "OnStartKlick");
-                        Messenger.Default.Send<PropertyChangedMessage<bool>>(message);
+                        var message = new NotificationMessage("OnStartKlick");
+                        Messenger.Default.Send<NotificationMessage>(message);
                     });
                 }
 

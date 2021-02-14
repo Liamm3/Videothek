@@ -1,6 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using System.Windows;
-using static Videothek.Logic.Ui.ViewModel.MainViewModel;
 
 namespace Videothek.Ui.Desktop
 {
@@ -11,9 +10,9 @@ namespace Videothek.Ui.Desktop
             InitializeComponent();
             Messenger
                 .Default
-                .Register<PropertyChangedMessage<bool>>(this, (PropertyChangedMessage<bool> e) =>
+                .Register<NotificationMessage>(this, (NotificationMessage message) =>
                 {
-                    if (e.PropertyName.Equals("OnStartKlick") && e.NewValue)
+                    if (message.Notification.Equals("OnStartKlick"))
                     {
                         MainControl.Content = new HauptFenster();
                     }
