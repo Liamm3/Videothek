@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Videothek.Ui.Desktop"
         mc:Ignorable="d"
-        Title="Videothek" Height="450" Width="800" DataContext="{Binding Main, Source={StaticResource Locator}}">
+        Title="Videothek"
+        Height="450"
+        Width="800"
+        DataContext="{Binding Main, Source={StaticResource Locator}}"
+        Loaded="Window_Loaded">
     <Grid>
-        <local:HauptFenster />
+        <ContentControl Name="MainControl" />
     </Grid>
 </Window>

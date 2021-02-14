@@ -1,28 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GalaSoft.MvvmLight.Messaging;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using static Videothek.Logic.Ui.ViewModel.MainViewModel;
 
 namespace Videothek.Ui.Desktop
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow : Window
-	{
-		public MainWindow()
-		{
-			InitializeComponent();
-		}
-	}
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+            Messenger
+                .Default
+                .Register<PropertyChangedMessage<bool>>(this, (PropertyChangedMessage<bool> e) =>
+                {
+                    if (e.PropertyName.Equals("OnStartKlick") && e.NewValue)
+                    {
+                        MainControl.Content = new HauptFenster();
+                    }
+                });
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            MainControl.Content = new StartSeite();
+        }
+    }
 }

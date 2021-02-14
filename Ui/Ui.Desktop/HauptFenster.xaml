@@ -36,8 +36,8 @@
         </Menu>
 
         <StackPanel Grid.Row="1" Grid.Column="5" Orientation="Horizontal" Height="50"  HorizontalAlignment="Center">
-            <TextBox  Style="{StaticResource SearchTxtb}" VerticalAlignment="Center" />
-            <Button  ToolTip="Add a new Item" Style="{StaticResource Button}" Width="25" VerticalAlignment="Center" Margin="0">
+            <TextBox Style="{StaticResource SearchTxtb}" VerticalAlignment="Center" />
+            <Button ToolTip="Add a new Item" Style="{StaticResource Button}" Width="25" VerticalAlignment="Center" Margin="0">
                 <TextBlock Text="&#x0001f50e;" MaxHeight="20" MaxWidth="20" FontSize="15" Background="#FFC3C3C3" />
             </Button>
         </StackPanel>
