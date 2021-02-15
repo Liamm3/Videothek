@@ -15,7 +15,7 @@ namespace Videothek.Logic.Ui.ViewModel
         public DataView SelectedData
         {
             get => selectedData;
-            set
+            private set
             {
                 selectedData = value;
                 RaisePropertyChanged("SelectedData");
@@ -30,40 +30,26 @@ namespace Videothek.Logic.Ui.ViewModel
             {
                 if (_onTableSelect == null)
                 {
-                    _onTableSelect = new RelayCommand<string>((table) =>
-                    {
-                        SelectedData = GetDataViewOf(table);
-                    });
+                    _onTableSelect = new RelayCommand<string>(table =>
+                        SelectedData = GetDataViewOf(table)
+                    );
                 }
 
                 return _onTableSelect;
             }
         }
 
-        public HauptFensterViewModel()
-        {
-            if (IsInDesignMode)
-            {
-                // Code runs in Blend --> create design time data.
-            }
-            else
-            {
-                // Code runs "for real"
-            }
-        }
-
         private DataView GetDataViewOf(string table)
         {
             DataTable dt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter();
             conn.ConnectionString = "Data Source=W011076SYS\\SQLEXPRESS;" +
                                     "Initial Catalog=Bibliothek;" +
                                     "Integrated Security=SSPI;";
-            SqlDataAdapter adapter = new SqlDataAdapter();
-
             try
             {
                 conn.Open();
-                adapter.SelectCommand = new SqlCommand("SELECT * FROM " + table, conn);
+                adapter.SelectCommand = new SqlCommand($"SELECT * FROM {table}", conn);
                 adapter.Fill(dt);
                 return dt.DefaultView;
             }

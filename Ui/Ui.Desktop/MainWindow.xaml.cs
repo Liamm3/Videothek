@@ -19,9 +19,7 @@ namespace Videothek.Ui.Desktop
                 });
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
+        private void Window_Loaded(object sender, RoutedEventArgs e) =>
             MainControl.Content = new StartSeite();
-        }
     }
 }
