@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="310">
+             d:DesignHeight="450"
+             d:DesignWidth="310">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="90" />
@@ -30,7 +31,16 @@
         <DatePicker Grid.Row="3" Grid.Column="1" />
         <DatePicker Grid.Row="4" Grid.Column="1" />
 
-        <Button Content="Abbrechen" Grid.Row="7" Grid.Column="0"  Grid.ColumnSpan="2" HorizontalAlignment="Left" Style="{StaticResource Button}" />
-        <Button Content="Content" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource Button}" />
+        <Button Content="Abbrechen"
+                Grid.Row="7"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Left"
+                Style="{StaticResource Button}" />
+        <Button Content="Content"
+                Grid.Row="7"
+                Grid.Column="1"
+                HorizontalAlignment="Right"
+                Style="{StaticResource Button}" />
     </Grid>
 </UserControl>

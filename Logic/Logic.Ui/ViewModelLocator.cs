@@ -1,12 +1,11 @@
 using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
 
-namespace Videothek.Logic.Ui.ViewModel
-{
-    public class ViewModelLocator
-    {
-        public ViewModelLocator()
-        {
+namespace Videothek.Logic.Ui.ViewModel {
+
+    public class ViewModelLocator {
+
+        public ViewModelLocator() {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             SimpleIoc.Default.Register<MainViewModel>();
@@ -15,6 +14,7 @@ namespace Videothek.Logic.Ui.ViewModel
 
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
 
-        public HauptFensterViewModel HauptFenster => ServiceLocator.Current.GetInstance<HauptFensterViewModel>();
+        public HauptFensterViewModel HauptFenster =>
+            ServiceLocator.Current.GetInstance<HauptFensterViewModel>();
     }
 }
