@@ -5,8 +5,15 @@ using System.Windows.Input;
 
 namespace Videothek.Logic.Ui.ViewModel {
 
+    /// <summary>
+    /// ViewModel für Main.xaml.
+    /// </summary>
     public class MainViewModel : ViewModelBase {
 
+        /// <summary>
+        /// Property für einen Command, der eine NotificationMessage mit dem String "OnStartKlick"
+        /// verschickt.
+        /// </summary>
         public ICommand OnStartKlick {
             get {
                 if (_onStartKlick == null) {
@@ -20,6 +27,9 @@ namespace Videothek.Logic.Ui.ViewModel {
             }
         }
 
+        /// <summary>
+        /// Field für den Command OnStartKlick.
+        /// </summary>
         private ICommand _onStartKlick;
     }
 }
