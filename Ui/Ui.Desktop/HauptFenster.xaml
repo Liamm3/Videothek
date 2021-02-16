@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ui="clr-namespace:Videothek.Logic.Ui;assembly=Videothek.Logic.Ui"
              mc:Ignorable="d"
              DataContext="{Binding HauptFenster, Source={StaticResource Locator}}"
              Height="450"
@@ -30,16 +31,16 @@
             <MenuItem Header="Anzeigen">
                 <MenuItem Header="Kunde"
                           Command="{Binding OnTableSelect}"
-                          CommandParameter="Kunde" />
+                          CommandParameter="{x:Static ui:TableNames.Kunde}" />
                 <MenuItem Header="Artikel"
                           Command="{Binding OnTableSelect}"
-                          CommandParameter="Artikel" />
+                          CommandParameter="{x:Static ui:TableNames.Artikel}" />
                 <MenuItem Header="Kategorien"
                           Command="{Binding OnTableSelect}"
-                          CommandParameter="Kategorie" />
+                          CommandParameter="{x:Static ui:TableNames.Kategorie}" />
                 <MenuItem Header="Ausgeliehene Artikel"
                           Command="{Binding OnTableSelect}"
-                          CommandParameter="Art_Ausgeliehen" />
+                          CommandParameter="{x:Static ui:TableNames.AusgelieheneArtikel}" />
             </MenuItem>
         </Menu>
 
@@ -65,7 +66,8 @@
         <Button Grid.Row="1"
                 Grid.Column="0"
                 ToolTip="Add a new Item"
-                Style="{StaticResource ButtonStart}">
+                Style="{StaticResource ButtonStart}"
+                Command="{Binding OnAddItemToTable}">
             <StackPanel Orientation="Vertical">
                 <Image Source="Add.png" MaxHeight="20" MinHeight="20" />
                 <TextBlock  Text="Hinzufügen" />
