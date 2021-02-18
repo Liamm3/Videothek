@@ -1,4 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using Videothek.Logic.Ui;
 
@@ -35,6 +37,15 @@ namespace Videothek.Ui.Desktop {
                         }
                     }
                 });
+
+            Messenger.Default.Register<Result>(this, (Result result) => {
+                if (result.Success && result.PropertyName.Equals("OnAddItemInDialog")) {
+                    _isChildWindowOpen = false;
+                    _childWindow.Close();
+                } else {
+                    MessageBox.Show("Es ist ein Fehler aufgetretreten. :/");
+                }
+            });
         }
 
         /// <summary>

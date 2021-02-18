@@ -56,6 +56,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="KundeViewModel.cs" />
+    <Compile Include="ArtikelViewModel.cs" />
+    <Compile Include="DbAbfragen.cs" />
+    <Compile Include="Result.cs" />
     <Compile Include="TableNames.cs" />
     <Compile Include="HauptFensterViewModel.cs" />
     <Compile Include="MainViewModel.cs" />

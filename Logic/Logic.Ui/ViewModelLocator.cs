@@ -17,13 +17,19 @@ namespace Videothek.Logic.Ui.ViewModel {
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<HauptFensterViewModel>();
+            SimpleIoc.Default.Register<ArtikelViewModel>();
+            SimpleIoc.Default.Register<KundeViewModel>();
         }
 
         /// <summary>
         /// Methode zum zurückgeben der Instanz des Typs "MainViewModel".
         /// </summary>
         /// <returns>Instanz von MainViewModel.</returns>
-        public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
+        public MainViewModel Main =>
+            ServiceLocator.Current.GetInstance<MainViewModel>();
+
+        public ArtikelViewModel Artikel =>
+            ServiceLocator.Current.GetInstance<ArtikelViewModel>();
 
         /// <summary>
         /// Methode zum zurückgeben der Instanz des Typs "HauptFensterViewModel".
@@ -31,5 +37,8 @@ namespace Videothek.Logic.Ui.ViewModel {
         /// <returns>Instanz von HauptFensterViewModel.</returns>
         public HauptFensterViewModel HauptFenster =>
             ServiceLocator.Current.GetInstance<HauptFensterViewModel>();
+
+        public KundeViewModel Kunde =>
+            ServiceLocator.Current.GetInstance<KundeViewModel>();
     }
 }

@@ -12,8 +12,6 @@ namespace Videothek.Logic.Ui.ViewModel {
     /// </summary>
     public class HauptFensterViewModel : ViewModelBase {
 
-        #region Properties und Fields
-
         /// <summary>
         /// Property für die ausgewählte Tabelle.
         /// </summary>
@@ -45,7 +43,7 @@ namespace Videothek.Logic.Ui.ViewModel {
                 if (_onTableSelect == null) {
                     _onTableSelect = new RelayCommand<string>(table => {
                         NameOfSelectedTable = table;
-                        SelectedData = GetDataViewOfSelectedTable();
+                        SelectedData = db.GetDataViewOf(table);
                     });
                 }
 
@@ -70,15 +68,6 @@ namespace Videothek.Logic.Ui.ViewModel {
         }
 
         /// <summary>
-        /// Initialisiere eine Verbindung zur Datenbank.
-        /// </summary>
-        private readonly SqlConnection conn = new SqlConnection() {
-            ConnectionString = "Data Source=W011076SYS\\SQLEXPRESS;" +
-                               "Initial Catalog=Bibliothek;" +
-                               "Integrated Security=SSPI;"
-        };
-
-        /// <summary>
         /// Field für die Daten aus der Datenbank.
         /// </summary>
         private DataView _selectedData;
@@ -98,33 +87,14 @@ namespace Videothek.Logic.Ui.ViewModel {
         /// </summary>
         private ICommand _onAddItemToTable;
 
-        #endregion Properties und Fields
+        private DbAbfragen db = new DbAbfragen();
 
-        #region Methoden
-
-        /// <summary>
-        /// Holt alle Zeilen aus der ausgewählten Tabelle mit allen Spalten und gibt
-        /// diese als DataView zurück.
-        /// </summary>
-        /// <returns>Alle Reihen mit allen Spalten der Tabelle als DataView.</returns>
-        private DataView GetDataViewOfSelectedTable() {
-            var dt = new DataTable();
-            var adapter = new SqlDataAdapter();
-
-            try {
-                conn.Open();
-                adapter.SelectCommand = new SqlCommand($"SELECT * FROM {NameOfSelectedTable}",
-                                                       conn);
-                adapter.Fill(dt);
-                return dt.DefaultView;
-            } catch (System.Exception e) {
-                conn.Close();
-                throw e;
-            } finally {
-                conn.Close();
-            }
+        public HauptFensterViewModel() {
+            Messenger.Default.Register<Result>(this, (Result r) => {
+                if (r.PropertyName.Equals("OnAddItemInDialog") && r.Success) {
+                    SelectedData = db.GetDataViewOf(NameOfSelectedTable);
+                }
+            });
         }
-
-        #endregion Methoden
     }
 }
