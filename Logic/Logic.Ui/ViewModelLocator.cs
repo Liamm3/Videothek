@@ -19,6 +19,7 @@ namespace Videothek.Logic.Ui.ViewModel {
             SimpleIoc.Default.Register<HauptFensterViewModel>();
             SimpleIoc.Default.Register<ArtikelViewModel>();
             SimpleIoc.Default.Register<KundeViewModel>();
+            SimpleIoc.Default.Register<KategorieViewModel>();
         }
 
         /// <summary>
@@ -40,5 +41,8 @@ namespace Videothek.Logic.Ui.ViewModel {
 
         public KundeViewModel Kunde =>
             ServiceLocator.Current.GetInstance<KundeViewModel>();
+
+        public KategorieViewModel Kategorie =>
+            ServiceLocator.Current.GetInstance<KategorieViewModel>();
     }
 }

@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="KategorieViewModel.cs" />
     <Compile Include="KundeViewModel.cs" />
     <Compile Include="ArtikelViewModel.cs" />
     <Compile Include="DbAbfragen.cs" />

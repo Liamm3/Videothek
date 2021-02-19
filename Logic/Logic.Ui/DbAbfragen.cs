@@ -49,9 +49,24 @@ namespace Videothek.Logic.Ui {
             return isSucessful;
         }
 
+        public bool AddCategory(string bezeichnung) {
+            var dict = new Dictionary<string, string>();
+            dict.Add("Bezeichnung", bezeichnung);
+
+            var isSucessful = GenericInsert(TableNames.Kategorie, dict);
+
+            return isSucessful;
+        }
+
         private bool GenericInsert(string table, Dictionary<string, string> columnNameValuePairs) {
             // TODO: Fixen
             conn.ConnectionString = "Data Source=W011076SYS\\SQLEXPRESS;Initial Catalog=Bibliothek;Integrated Security=SSPI;";
+
+            foreach (var value in columnNameValuePairs.Values) {
+                if (string.IsNullOrWhiteSpace(value)) {
+                    return false;
+                }
+            }
 
             try {
                 using (conn) {
