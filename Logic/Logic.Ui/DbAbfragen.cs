@@ -1,5 +1,7 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace Videothek.Logic.Ui {
 
@@ -33,21 +35,29 @@ namespace Videothek.Logic.Ui {
         }
 
         public bool AddCustomer(string vorname, string nachname, string strasse,
-                                      string hausnummer, string plz, string ort) {
+                                string hausnummer, string plz, string ort) {
+            var dict = new Dictionary<string, string>();
+            dict.Add("Name", nachname);
+            dict.Add("Vorname", vorname);
+            dict.Add("Strasse", strasse);
+            dict.Add("Hausnummer", hausnummer);
+            dict.Add("PLZ", plz);
+            dict.Add("Ort", ort);
+
+            var isSucessful = GenericInsert(TableNames.Kunde, dict);
+
+            return isSucessful;
+        }
+
+        private bool GenericInsert(string table, Dictionary<string, string> columnNameValuePairs) {
+            // TODO: Fixen
+            conn.ConnectionString = "Data Source=W011076SYS\\SQLEXPRESS;Initial Catalog=Bibliothek;Integrated Security=SSPI;";
+
             try {
                 using (conn) {
-                    conn.ConnectionString = "Data Source=W011076SYS\\SQLEXPRESS;Initial Catalog=Bibliothek;Integrated Security=SSPI;";
                     conn.Open();
-                    var query = @"INSERT INTO Kunde(Name, Vorname, Strasse, Hausnummer, PLZ, Ort)
-                                  VALUES (@Nachname, @Vorname, @Strasse, @Hausnummer, @PLZ, @Ort)";
-                    var cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@Nachname", nachname);
-                    cmd.Parameters.AddWithValue("@Vorname", vorname);
-                    cmd.Parameters.AddWithValue("@Strasse", strasse);
-                    cmd.Parameters.AddWithValue("@Hausnummer", hausnummer);
-                    cmd.Parameters.AddWithValue("@PLZ", plz);
-                    cmd.Parameters.AddWithValue("@Ort", ort);
-                    // cmd.Prepare();
+                    var query = GenerateInsertPreparedQuery(table, columnNameValuePairs.Keys);
+                    var cmd = GenerateSqlCommand(conn, query, columnNameValuePairs);
                     cmd.ExecuteNonQuery();
                     conn.Close();
                 }
@@ -59,6 +69,37 @@ namespace Videothek.Logic.Ui {
             } finally {
                 conn.Close();
             }
+        }
+
+        private string GenerateInsertPreparedQuery(
+            string table,
+            Dictionary<string, string>.KeyCollection columnNames
+        ) {
+            var columnList = columnNames.ToList();
+            string columns = "";
+            string values = "";
+            foreach (var name in columnNames) {
+                if (columnList.IndexOf(name) < columnList.Count - 1) {
+                    columns += $"{name},";
+                    values += $"@{name},";
+                } else {
+                    columns += name;
+                    values += $"@{name}";
+                }
+            }
+
+            return $"INSERT INTO {table} ({columns}) VALUES ({values})";
+        }
+
+        private SqlCommand GenerateSqlCommand(SqlConnection conn, string query,
+                                              Dictionary<string, string> dict) {
+            var cmd = new SqlCommand(query, conn);
+
+            foreach (var kvp in dict) {
+                cmd.Parameters.AddWithValue($"@{kvp.Key}", kvp.Value);
+            }
+
+            return cmd;
         }
     }
 }
