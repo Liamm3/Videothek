@@ -1,4 +1,6 @@
-﻿<UserControl x:Class="Videothek.Ui.Desktop.HauptFenster"
+﻿<UserControl
+             xmlns:local="clr-namespace:Videothek.Ui.Desktop"
+             x:Class="Videothek.Ui.Desktop.HauptFenster"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -95,7 +97,7 @@
         <DataGrid Grid.Row="3"
                   Margin="10"
                   Grid.ColumnSpan="6"
-                  ItemsSource="{Binding SelectedData}"
+                  ItemsSource="{Binding SelectedData, UpdateSourceTrigger=PropertyChanged}"
                   AutoGenerateColumns="True"
                   CanUserAddRows="False" />
     </Grid>

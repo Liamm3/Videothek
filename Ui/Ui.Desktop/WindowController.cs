@@ -1,25 +1,24 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using System.Windows;
 using System.Windows.Controls;
-using Videothek.Logic.Ui;
 using Videothek.Logic.Ui.Messages;
 
 namespace Videothek.Ui.Desktop {
 
-    public partial class Artikel : UserControl {
-        private ChildWindowPickData _childWindow = new ChildWindowPickData();
+    public abstract class WindowController : UserControl {
+        public ChildWindow ChildWindow { set => _childWindow.Content = value; }
+
+        private ChildWindow _childWindow = new ChildWindow();
         private bool _isChildWindowOpen = false;
 
-        public Artikel() {
-            InitializeComponent();
-
+        public WindowController() : base() {
             Messenger
                 .Default
                 .Register(this, (NotificationMessage message) => {
                     if (!_isChildWindowOpen) {
                         _childWindow.Closed += (sender, args) => {
                             _isChildWindowOpen = false;
-                            _childWindow = new ChildWindowPickData();
+                            _childWindow = new ChildWindow();
                         };
 
                         SetChildWindowToMatchingUserControl(message.Notification);
@@ -43,8 +42,6 @@ namespace Videothek.Ui.Desktop {
                });
         }
 
-        private void SetChildWindowToMatchingUserControl(string name) {
-            // implement
-        }
+        protected abstract void SetChildWindowToMatchingUserControl(string name);
     }
 }

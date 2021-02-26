@@ -76,6 +76,7 @@
     <Compile Include="StartSeite.xaml.cs">
       <DependentUpon>StartSeite.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowController.cs" />
     <Page Include="Artikel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

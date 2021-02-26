@@ -1,53 +1,97 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using System.Windows.Input;
+using Videothek.Logic.Ui.Messages;
+using Videothek.Logic.Ui.Model;
 
 namespace Videothek.Logic.Ui {
 
     public class ArtikelViewModel : ViewModelBase {
 
         public int Id {
-            get => _id;
+            get => _artikel.Id;
             set {
-                _id = value;
+                _artikel.Id = value;
                 RaisePropertyChanged("Id");
             }
         }
 
         public string Bezeichnung {
-            get => _bezeichnung;
+            get => _artikel.Bezeichnung;
             set {
-                _bezeichnung = value;
+                _artikel.Bezeichnung = value;
                 RaisePropertyChanged("Bezeichnung");
             }
         }
 
-        public string Kategorie {
-            get => _kategorie;
+        public int KategorieId {
+            get => _artikel.KategorieId;
             set {
-                _kategorie = value;
-                RaisePropertyChanged("Kategorie");
+                _artikel.KategorieId = value;
+                RaisePropertyChanged("KategorieId");
             }
         }
 
         public double Leihpreis {
-            get => _leihpreis;
+            get => _artikel.Leihpreis;
             set {
-                _leihpreis = value;
+                _artikel.Leihpreis = value;
                 RaisePropertyChanged("Leihpreis");
             }
         }
 
         public int Menge {
-            get => _menge;
+            get => _artikel.Menge;
             set {
-                _menge = value;
+                _artikel.Menge = value;
                 RaisePropertyChanged("Menge");
             }
         }
 
-        private int _id;
-        private string _bezeichnung;
-        private string _kategorie;
-        private double _leihpreis;
-        private int _menge;
+        public ICommand OnAddArticle {
+            get {
+                if (_onAddArticle == null) {
+                    _onAddArticle = new RelayCommand(() => {
+                        var isSuccessful = db.Insert(_artikel);
+                        var m = new AddResultMessage(isSuccessful);
+                        Messenger.Default.Send(m);
+
+                        if (isSuccessful) {
+                            Bezeichnung = "";
+                            KategorieId = 0;
+                            Leihpreis = 0;
+                            Menge = 0;
+                            Messenger.Default.Send(
+                                new NotificationMessage(Notifactions.REFRESH_CURRENT_TABLE)
+                            );
+                        }
+                    });
+                }
+
+                return _onAddArticle;
+            }
+        }
+
+        public ICommand OnCategorySelect {
+            get {
+                if (_onCategorySelect == null) {
+                    _onCategorySelect = new RelayCommand(() => {
+                        // open pickdata loaded data
+                    });
+                }
+
+                return _onCategorySelect;
+            }
+        }
+
+        private Artikel _artikel = new Artikel();
+        private DbAbfragen db = new DbAbfragen();
+        private ICommand _onAddArticle;
+        private ICommand _onCategorySelect;
+
+        public ArtikelViewModel() {
+            // setze artikel.KategorieId
+        }
     }
 }

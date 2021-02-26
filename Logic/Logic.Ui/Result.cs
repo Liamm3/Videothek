@@ -2,9 +2,14 @@
 
 namespace Videothek.Logic.Ui {
 
-    public class Result : PropertyChangedMessageBase {
+    public class Result<T> {
         public bool Success { get; set; }
 
-        public Result(bool success, string propertyName) : base(propertyName) => Success = success;
+        public T Record { get; set; }
+
+        public Result(bool success, T record) {
+            Success = success;
+            Record = record;
+        }
     }
 }

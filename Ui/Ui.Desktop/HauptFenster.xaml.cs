@@ -1,8 +1,8 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using Videothek.Logic.Ui;
+using Videothek.Logic.Ui.Messages;
 
 namespace Videothek.Ui.Desktop {
 
@@ -11,7 +11,6 @@ namespace Videothek.Ui.Desktop {
     /// </summary>
     public partial class HauptFenster : UserControl {
         private ChildWindow _childWindow = new ChildWindow();
-
         private bool _isChildWindowOpen = false;
 
         /// <summary>
@@ -22,7 +21,7 @@ namespace Videothek.Ui.Desktop {
             InitializeComponent();
             Messenger
                 .Default
-                .Register<NotificationMessage>(this, (NotificationMessage message) => {
+                .Register(this, (NotificationMessage message) => {
                     if (!_isChildWindowOpen) {
                         _childWindow.Closed += (sender, args) => {
                             _isChildWindowOpen = false;
@@ -38,14 +37,16 @@ namespace Videothek.Ui.Desktop {
                     }
                 });
 
-            Messenger.Default.Register<Result>(this, (Result result) => {
-                if (result.Success && result.PropertyName.Equals("OnAddItemInDialog")) {
-                    _isChildWindowOpen = false;
-                    _childWindow.Close();
-                } else {
-                    MessageBox.Show("Es ist ein Fehler aufgetretreten. :/");
-                }
-            });
+            Messenger
+               .Default
+               .Register(this, (AddResultMessage m) => {
+                   if (m.Success) {
+                       _isChildWindowOpen = false;
+                       _childWindow.Close();
+                   } else {
+                       MessageBox.Show("Es ist ein Fehler aufgetretreten. :/");
+                   }
+               });
         }
 
         /// <summary>

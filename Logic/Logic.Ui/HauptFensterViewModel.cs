@@ -1,9 +1,13 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Input;
+using Videothek.Logic.Ui.Interfaces;
+using Videothek.Logic.Ui.Messages;
+using Videothek.Logic.Ui.Model;
 
 namespace Videothek.Logic.Ui.ViewModel {
 
@@ -15,7 +19,7 @@ namespace Videothek.Logic.Ui.ViewModel {
         /// <summary>
         /// Property für die ausgewählte Tabelle.
         /// </summary>
-        public DataView SelectedData {
+        public ObservableCollection<dynamic> SelectedData {
             get => _selectedData;
             private set {
                 _selectedData = value;
@@ -43,7 +47,7 @@ namespace Videothek.Logic.Ui.ViewModel {
                 if (_onTableSelect == null) {
                     _onTableSelect = new RelayCommand<string>(table => {
                         NameOfSelectedTable = table;
-                        SelectedData = db.GetDataViewOf(table);
+                        SelectedData = new ObservableCollection<dynamic>(db.GetAllByTable(table));
                     });
                 }
 
@@ -70,7 +74,7 @@ namespace Videothek.Logic.Ui.ViewModel {
         /// <summary>
         /// Field für die Daten aus der Datenbank.
         /// </summary>
-        private DataView _selectedData;
+        private ObservableCollection<dynamic> _selectedData;
 
         /// <summary>
         /// Field für den Namen der momentan ausgewählten Tabelle.
@@ -90,9 +94,11 @@ namespace Videothek.Logic.Ui.ViewModel {
         private DbAbfragen db = new DbAbfragen();
 
         public HauptFensterViewModel() {
-            Messenger.Default.Register<Result>(this, (Result r) => {
-                if (r.PropertyName.Equals("OnAddItemInDialog") && r.Success) {
-                    SelectedData = db.GetDataViewOf(NameOfSelectedTable);
+            Messenger.Default.Register(this, (NotificationMessage m) => {
+                if (m.Notification.Equals("RefreshCurrentTable")) {
+                    SelectedData = new ObservableCollection<dynamic>(
+                        db.GetAllByTable(NameOfSelectedTable)
+                    );
                 }
             });
         }

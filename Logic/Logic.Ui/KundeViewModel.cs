@@ -2,69 +2,65 @@
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System.Windows.Input;
+using Videothek.Logic.Ui.Messages;
+using Videothek.Logic.Ui.Model;
 
 namespace Videothek.Logic.Ui {
 
     public class KundeViewModel : ViewModelBase {
 
-        public KundeViewModel() {
-            db = new DbAbfragen();
-        }
-
-        private DbAbfragen db;
-
         public int Id {
-            get => _id;
+            get => kunde.Id;
             set {
-                _id = value;
+                kunde.Id = value;
                 RaisePropertyChanged("Id");
             }
         }
 
         public string Vorname {
-            get => _vorname;
+            get => kunde.Vorname;
             set {
-                _vorname = value;
+                kunde.Vorname = value;
                 RaisePropertyChanged("Vorname");
             }
         }
 
         public string Nachname {
-            get => _nachname;
+            get => kunde.Nachname;
             set {
-                _nachname = value;
+                kunde.Nachname = value;
                 RaisePropertyChanged("Nachname");
             }
         }
 
         public string Strasse {
-            get => _strasse;
+            get => kunde.Strasse;
             set {
-                _strasse = value;
+                kunde.Strasse = value;
                 RaisePropertyChanged("Strasse");
             }
         }
 
         public string Hausnummer {
-            get => _hausnummer;
+            get => kunde.Hausnummer;
             set {
-                _hausnummer = value;
+                kunde.Hausnummer = value;
                 RaisePropertyChanged("Hausnummer");
             }
         }
 
         public string Plz {
-            get => _plz;
+            get => kunde.Plz;
             set {
-                _plz = value;
+                kunde.Plz = value;
                 RaisePropertyChanged("Plz");
             }
         }
 
         public string Ort {
-            get => _ort;
+            get => kunde.Ort;
             set {
-                _ort = value;
+                kunde.Ort = value;
                 RaisePropertyChanged("Ort");
             }
         }
@@ -73,11 +69,9 @@ namespace Videothek.Logic.Ui {
             get {
                 if (_onAddCustomer == null) {
                     _onAddCustomer = new RelayCommand(() => {
-                        var isSuccessful =
-                            db.AddCustomer(Vorname, Nachname, Strasse, Hausnummer, Plz, Ort);
-
-                        var r = new Result(isSuccessful, "OnAddItemInDialog");
-                        Messenger.Default.Send<Result>(r);
+                        var isSuccessful = db.Insert(kunde);
+                        var r = new AddResultMessage(isSuccessful);
+                        Messenger.Default.Send(r);
 
                         if (isSuccessful) {
                             Vorname = "";
@@ -86,6 +80,9 @@ namespace Videothek.Logic.Ui {
                             Hausnummer = "";
                             Plz = "";
                             Ort = "";
+                            Messenger.Default.Send(
+                                new NotificationMessage(Notifactions.REFRESH_CURRENT_TABLE)
+                            );
                         }
                     });
                 }
@@ -94,13 +91,8 @@ namespace Videothek.Logic.Ui {
             }
         }
 
-        private int _id;
-        private string _vorname;
-        private string _nachname;
-        private string _strasse;
-        private string _hausnummer;
-        private string _plz;
-        private string _ort;
+        private DbAbfragen db = new DbAbfragen();
+        private Kunde kunde = new Kunde();
         private ICommand _onAddCustomer;
     }
 }

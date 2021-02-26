@@ -56,10 +56,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\Recordable.cs" />
     <Compile Include="KategorieViewModel.cs" />
     <Compile Include="KundeViewModel.cs" />
     <Compile Include="ArtikelViewModel.cs" />
     <Compile Include="DbAbfragen.cs" />
+    <Compile Include="Messages\KategorieMessage.cs" />
+    <Compile Include="Messages\KundeMessage.cs" />
+    <Compile Include="Messages\Notifactions.cs" />
+    <Compile Include="Messages\AddResultMessage.cs" />
+    <Compile Include="Model\Artikel.cs" />
+    <Compile Include="Model\ArtikelAusgeliehen.cs" />
+    <Compile Include="Model\Kategorie.cs" />
+    <Compile Include="Model\Kunde.cs" />
+    <Compile Include="Model\Record.cs" />
     <Compile Include="Result.cs" />
     <Compile Include="TableNames.cs" />
     <Compile Include="HauptFensterViewModel.cs" />
