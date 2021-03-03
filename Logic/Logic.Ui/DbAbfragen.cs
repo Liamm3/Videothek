@@ -13,6 +13,7 @@ namespace Videothek.Logic.Ui {
         };
 
         public bool Insert<T>(T record) where T : Record<T> {
+            // TODO: Fixen
             conn.ConnectionString = "Data Source=W011076SYS\\SQLEXPRESS;Initial Catalog=Bibliothek;Integrated Security=SSPI;";
             var dict = record.ToDict();
 

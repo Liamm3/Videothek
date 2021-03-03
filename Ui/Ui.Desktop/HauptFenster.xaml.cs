@@ -10,7 +10,7 @@ namespace Videothek.Ui.Desktop {
     /// Das Hauptfenster dient als Bedienoberfläche für alle wichtigen Funktionen.
     /// </summary>
     public partial class HauptFenster : UserControl {
-        private ChildWindow _childWindow = new ChildWindow();
+        private ChildWindow _childWindow;
         private bool _isChildWindowOpen = false;
 
         /// <summary>
@@ -21,19 +21,17 @@ namespace Videothek.Ui.Desktop {
             InitializeComponent();
             Messenger
                 .Default
-                .Register(this, (NotificationMessage message) => {
-                    if (!_isChildWindowOpen) {
+                .Register(this, (OpenChildWindowMessage message) => {
+                    if (_childWindow == null && !_isChildWindowOpen) {
+                        _childWindow = new ChildWindow();
                         _childWindow.Closed += (sender, args) => {
-                            _isChildWindowOpen = false;
-                            _childWindow = new ChildWindow();
+                            Cleanup();
                         };
 
                         SetChildWindowToMatchingUserControl(message.Notification);
 
-                        if (_childWindow.Content != null) {
-                            _childWindow.Show();
-                            _isChildWindowOpen = true;
-                        }
+                        _childWindow.Show();
+                        _isChildWindowOpen = true;
                     }
                 });
 
@@ -41,12 +39,17 @@ namespace Videothek.Ui.Desktop {
                .Default
                .Register(this, (AddResultMessage m) => {
                    if (m.Success) {
-                       _isChildWindowOpen = false;
                        _childWindow.Close();
+                       Cleanup();
                    } else {
                        MessageBox.Show("Es ist ein Fehler aufgetretreten. :/");
                    }
                });
+        }
+
+        private void Cleanup() {
+            _isChildWindowOpen = false;
+            _childWindow = null;
         }
 
         /// <summary>

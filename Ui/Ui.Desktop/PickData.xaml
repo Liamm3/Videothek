@@ -14,7 +14,8 @@
         <DataGrid VerticalAlignment="Top"
                   Height="400"
                   AutoGenerateColumns="True"
-                  CanUserAddRows="False" />
+                  CanUserAddRows="False"
+                  Name="Grid" />
         <Button Content="Hinzufügen" Grid.Row="1" Style="{StaticResource Button}" />
     </Grid>
 </UserControl>

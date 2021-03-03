@@ -81,7 +81,7 @@ namespace Videothek.Logic.Ui {
                             Plz = "";
                             Ort = "";
                             Messenger.Default.Send(
-                                new NotificationMessage(Notifactions.REFRESH_CURRENT_TABLE)
+                                new NotificationMessage(Notifications.REFRESH_CURRENT_TABLE)
                             );
                         }
                     });

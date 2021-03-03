@@ -2,12 +2,8 @@
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System.Collections.ObjectModel;
-using System.Data;
-using System.Data.SqlClient;
 using System.Windows.Input;
-using Videothek.Logic.Ui.Interfaces;
 using Videothek.Logic.Ui.Messages;
-using Videothek.Logic.Ui.Model;
 
 namespace Videothek.Logic.Ui.ViewModel {
 
@@ -62,8 +58,9 @@ namespace Videothek.Logic.Ui.ViewModel {
             get {
                 if (_onAddItemToTable == null) {
                     _onAddItemToTable = new RelayCommand(() => {
-                        var message = new NotificationMessage(NameOfSelectedTable);
-                        Messenger.Default.Send<NotificationMessage>(message);
+                        var message = new OpenChildWindowMessage(NameOfSelectedTable);
+
+                        Messenger.Default.Send(message);
                     });
                 }
 
@@ -95,7 +92,7 @@ namespace Videothek.Logic.Ui.ViewModel {
 
         public HauptFensterViewModel() {
             Messenger.Default.Register(this, (NotificationMessage m) => {
-                if (m.Notification.Equals("RefreshCurrentTable")) {
+                if (m.Notification.Equals(Notifications.REFRESH_CURRENT_TABLE)) {
                     SelectedData = new ObservableCollection<dynamic>(
                         db.GetAllByTable(NameOfSelectedTable)
                     );

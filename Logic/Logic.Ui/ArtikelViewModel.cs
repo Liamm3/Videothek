@@ -63,7 +63,7 @@ namespace Videothek.Logic.Ui {
                             Leihpreis = 0;
                             Menge = 0;
                             Messenger.Default.Send(
-                                new NotificationMessage(Notifactions.REFRESH_CURRENT_TABLE)
+                                new NotificationMessage(Notifications.REFRESH_CURRENT_TABLE)
                             );
                         }
                     });
@@ -77,7 +77,9 @@ namespace Videothek.Logic.Ui {
             get {
                 if (_onCategorySelect == null) {
                     _onCategorySelect = new RelayCommand(() => {
-                        // open pickdata loaded data
+                        var categories = db.GetAllByTable(TableNames.Kategorie);
+                        var m = new OpenPickDataMessage(categories);
+                        Messenger.Default.Send(m);
                     });
                 }
 

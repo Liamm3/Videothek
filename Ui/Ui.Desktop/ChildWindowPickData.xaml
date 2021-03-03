@@ -8,6 +8,6 @@
         Height="450"
         Width="800">
     <Grid>
-        <ContentControl />
+        <ContentControl Name="PickDataController" />
     </Grid>
 </Window>

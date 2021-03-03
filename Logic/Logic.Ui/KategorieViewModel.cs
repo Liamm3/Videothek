@@ -36,7 +36,7 @@ namespace Videothek.Logic.Ui {
                         if (isSuccessful) {
                             Bezeichnung = "";
                             Messenger.Default.Send(
-                                new NotificationMessage(Notifactions.REFRESH_CURRENT_TABLE)
+                                new NotificationMessage(Notifications.REFRESH_CURRENT_TABLE)
                             );
                         }
                     });

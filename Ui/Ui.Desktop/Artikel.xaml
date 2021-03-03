@@ -35,7 +35,7 @@
             Grid.Row="4"
             Grid.Column="1"
             Style="{StaticResource ButtonContenControl}"
-            Command="{Binding OnAddArticle}" />
+            Command="{Binding OnCategorySelect}" />
 
         <Button Content="Abbrechen"
                 Grid.Row="7"

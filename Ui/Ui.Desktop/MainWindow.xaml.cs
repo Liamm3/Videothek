@@ -20,7 +20,7 @@ namespace Videothek.Ui.Desktop {
              */
             Messenger
                 .Default
-                .Register<NotificationMessage>(this, (NotificationMessage message) => {
+                .Register(this, (NotificationMessage message) => {
                     if (message.Notification != null && message.Notification.Equals("OnStartKlick")) {
                         MainControl.Content = new HauptFenster();
                     }
