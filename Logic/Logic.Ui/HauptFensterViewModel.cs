@@ -59,7 +59,6 @@ namespace Videothek.Logic.Ui.ViewModel {
                 if (_onAddItemToTable == null) {
                     _onAddItemToTable = new RelayCommand(() => {
                         var message = new OpenChildWindowMessage(NameOfSelectedTable);
-
                         Messenger.Default.Send(message);
                     });
                 }

@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System.Diagnostics;
 using System.Windows.Input;
 using Videothek.Logic.Ui.Messages;
 using Videothek.Logic.Ui.Model;
@@ -93,7 +94,23 @@ namespace Videothek.Logic.Ui {
         private ICommand _onCategorySelect;
 
         public ArtikelViewModel() {
-            // setze artikel.KategorieId
+            Messenger.Default.Register(this, (ChooseItemMessage message) => {
+                Id = message.Id;
+                var isSuccessful = db.Insert(_artikel);
+                var r = new AddResultMessage(isSuccessful);
+                Messenger.Default.Send(r);
+
+                if (isSuccessful) {
+                    Id = 0;
+                    KategorieId = 0;
+                    Bezeichnung = "";
+                    Leihpreis = 0;
+                    Menge = 0;
+                    Messenger.Default.Send(
+                        new NotificationMessage(Notifications.REFRESH_CURRENT_TABLE)
+                    );
+                }
+            });
         }
     }
 }

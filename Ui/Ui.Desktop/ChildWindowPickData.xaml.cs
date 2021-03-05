@@ -9,7 +9,6 @@ namespace Videothek.Ui.Desktop {
 
         public ChildWindowPickData(List<dynamic> list) {
             InitializeComponent();
-
             PickDataController.Content = new PickData(list);
         }
     }

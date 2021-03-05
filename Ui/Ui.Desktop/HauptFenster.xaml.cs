@@ -60,6 +60,7 @@ namespace Videothek.Ui.Desktop {
             switch (name) {
                 case TableNames.Artikel:
                     _childWindow.Content = new Artikel();
+                    Messenger.Default.Register
                     break;
 
                 case TableNames.AusgelieheneArtikel:

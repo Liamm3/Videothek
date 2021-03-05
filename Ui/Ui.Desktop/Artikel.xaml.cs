@@ -24,16 +24,19 @@ namespace Videothek.Ui.Desktop {
                         _isChildWindowOpen = true;
                     }
                 });
+
+            Messenger
+               .Default
+               .Register(this, (ChooseItemMessage _) => {
+                   _childWindow.Close();
+                   Cleanup();
+               });
         }
 
         private void Cleanup() {
             _childWindow = null;
             _isChildWindowOpen = false;
             Messenger.Default.Unregister<OpenPickDataMessage>(this);
-        }
-
-        private void SetChildWindowToMatchingUserControl(string name) {
-            // implement
         }
     }
 }

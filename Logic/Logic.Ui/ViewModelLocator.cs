@@ -20,6 +20,7 @@ namespace Videothek.Logic.Ui.ViewModel {
             SimpleIoc.Default.Register<ArtikelViewModel>();
             SimpleIoc.Default.Register<KundeViewModel>();
             SimpleIoc.Default.Register<KategorieViewModel>();
+            SimpleIoc.Default.Register<PickDataViewModel>();
         }
 
         /// <summary>
@@ -44,5 +45,8 @@ namespace Videothek.Logic.Ui.ViewModel {
 
         public KategorieViewModel Kategorie =>
             ServiceLocator.Current.GetInstance<KategorieViewModel>();
+
+        public PickDataViewModel PickData =>
+            ServiceLocator.Current.GetInstance<PickDataViewModel>();
     }
 }

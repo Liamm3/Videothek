@@ -61,6 +61,8 @@
     <Compile Include="KundeViewModel.cs" />
     <Compile Include="ArtikelViewModel.cs" />
     <Compile Include="DbAbfragen.cs" />
+    <Compile Include="Messages\ChooseItemMessage.cs" />
+    <Compile Include="Messages\CloseWindowMessage.cs" />
     <Compile Include="Messages\KategorieMessage.cs" />
     <Compile Include="Messages\KundeMessage.cs" />
     <Compile Include="Messages\OpenPickDataMessage.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="Model\Kategorie.cs" />
     <Compile Include="Model\Kunde.cs" />
     <Compile Include="Model\Record.cs" />
+    <Compile Include="PickDataViewModel.cs" />
     <Compile Include="Result.cs" />
     <Compile Include="TableNames.cs" />
     <Compile Include="HauptFensterViewModel.cs" />
